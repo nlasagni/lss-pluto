@@ -1,0 +1,8 @@
+# Required: enables the service
+services:
+  - docker
+# Optionally, specify where you want your container built, I like to use the latest version of Linux
+dist: focal
+script:
+# Build the image
+  - docker build .
