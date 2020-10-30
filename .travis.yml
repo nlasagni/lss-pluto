@@ -3,6 +3,14 @@ services:
   - docker
 # Optionally, specify where you want your container built, I like to use the latest version of Linux
 dist: focal
+# Utilities
+env:
+  global:
+    - TZ=UTC
+    - IMAGE_NAME="nlasagni/lss-pluto"
+# Version computation. Here dates are used instead of Semantic Versioning
+before_script:
+  - export TAG="$(git describe || git log -n1 --date=format:'%Y-%m-%dT%H%M%S' --format=%cd)$(date +%Y-%m-%d_%H%M)"
 script:
 # Build the image
-  - docker build .
+  - docker build -t $IMAGE_NAME:latest -t $IMAGE_NAME:$TAG .
